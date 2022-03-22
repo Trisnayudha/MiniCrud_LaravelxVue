@@ -7,7 +7,7 @@ const Home = require('../pages/Home').default
 const About = require('../pages/About').default
 const NotFound = require('../pages/NotFound').default
 const User = require('../pages/User').default
-
+const DetailUser = require('../pages/DetailUser').default
 
 const routes = [
     //Route page
@@ -23,8 +23,13 @@ const routes = [
     },
     {
         name: 'User',
-        path: '/user/:name?',
+        path: '/user',
         component: User,
+    },
+    {
+        name: 'DetailUser',
+        path: '/user/:id',
+        component: DetailUser,
         props: true
     },
 

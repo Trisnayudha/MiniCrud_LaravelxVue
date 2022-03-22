@@ -1,37 +1,41 @@
 <template>
-    <div>
-    <section v-if="name">
-        <h1>Hallo {{ name }}</h1>
-        <router-link :to="{name: 'User'}">Kembali</router-link>
-    </section>
-    <section v-else>
+    <div>    
+    <section>
         <h1>Daftar List Pengguna</h1>
         <ul>
             <li v-for="user in users" :key="user.id">
-                <router-link :to="profile_uri(user.name)">{{user.name}}</router-link>
+                <!-- <router-link :to="profile_uri(user.id)">{{user.name}}</router-link> -->
+                <a href="" @click.prevent="lihatuser(user.id)">{{user.name}}</a>
             </li>
         </ul>
     </section>
-
     </div>
-
 </template>
 
 <script>
-export default {
-    props: ['name'],
+export default {   
     data() {
         return{
-            users:[
-                {id:1,name:'Asep'},
-                {id:2,name:'Cecep'},
-                {id:3,name:'Batagor'},
-            ]
+            users:[],           
         }
     },
+    mounted() {
+        this.getUsers()
+    },
     methods:{
-        profile_uri(name){
-            return '/user/'+name
+        getUsers(){
+            axios.get('/api/users').then((response)=>{
+            this.users = response.data           
+        })
+        },       
+        profile_uri(id){
+            return '/user/'+id
+        },
+        lihatuser(id){
+            this.$router.push({
+                name:'DetailUser',
+                params: {id}
+            })
         }
     }
 }
