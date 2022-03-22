@@ -18,6 +18,6 @@ Route::get('/', function () {
 });
 
 
-Route::any('/{slug}', function () {
+Route::any('/{any}', function () {
     return view('latihan');
-});
+})->where('any', '.*');
