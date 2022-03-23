@@ -9,6 +9,7 @@ const NotFound = require('../pages/NotFound').default
 const User = require('../pages/User').default
 const DetailUser = require('../pages/DetailUser').default
 const Register = require('../pages/Register').default
+const EditUser = require('../pages/EditUser').default
 
 const routes = [
     //Route page
@@ -36,6 +37,12 @@ const routes = [
         name: 'DetailUser',
         path: '/user/:id',
         component: DetailUser,
+        props: true
+    },
+    {
+        name: 'EditUser',
+        path: '/user/:id/edit',
+        component: EditUser,
         props: true
     },
 

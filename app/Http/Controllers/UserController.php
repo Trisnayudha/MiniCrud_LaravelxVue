@@ -60,6 +60,40 @@ class UserController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'name' => ['required'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            ],
+            [
+                'name.required' => 'Nama Harap diisi',
+                'email.required' => 'Email Harap diisi',
+                'email.unique' => 'Email sudah digunakan',
+                'email.email' => 'Email tidak Valid'
+            ]
+        );
+
+        if ($validate->fails()) {
+            $response['status'] = false;
+            $response['message'] = $validate->errors();
+
+            return response()->json($response, 403);
+        } else {
+            $user = User::find($id)->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'Data Berhasil di Ubah',
+                'data' => $user
+            ], 201);
+        }
+    }
+
     public function destroy($id)
     {
 
