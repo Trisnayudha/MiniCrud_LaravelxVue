@@ -2,6 +2,7 @@
     <div>    
     <section>
         <h1>Daftar List Pengguna</h1>
+        <router-link :to="{name: 'Register'}">Register</router-link>
         <ul>
             <li v-for="user in users" :key="user.id">
                 <!-- <router-link :to="profile_uri(user.id)">{{user.name}}</router-link> -->
