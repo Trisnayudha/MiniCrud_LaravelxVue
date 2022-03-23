@@ -4,6 +4,7 @@
         <h1>Hallo {{ detailUser.name }}</h1>
         <h3> Email:  {{detailUser.email}}</h3>
         <router-link :to="{name: 'User'}">Kembali</router-link>
+        <a href="" @click.prevent="handlingDelete()"> Delete</a>
     </section> 
     </div>
 </template>
@@ -24,9 +25,25 @@ export default {
     },
     methods:{
         getUser(){
-            axios.get('/api/users/'+ this.id).then((response)=>{   
+            axios.get('/api/users/'+ this.id).then((response) => {    
             this.detailUser = response.data
         })
+        },
+        handlingDelete(){
+            if(confirm('Apakah anda yakin menghapus data ini?')){
+                axios.delete('/api/users/' + this.id).then((response) => {
+                    if(response.data.status){
+                this.$noty.success(response.data.message)
+                   this.$router.push({
+                       name: 'User'
+                    })
+                }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            }else{
+                return false;
+            }
         }
     }
 }

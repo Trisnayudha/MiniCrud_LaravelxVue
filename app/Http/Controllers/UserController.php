@@ -59,4 +59,16 @@ class UserController extends Controller
             ], 201);
         }
     }
+
+    public function destroy($id)
+    {
+
+        $user = User::find($id)->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Berhasil di Hapus',
+            'data' => $user
+        ]);
+    }
 }

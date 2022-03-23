@@ -2110,6 +2110,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['id'],
   data: function data() {
@@ -2130,6 +2131,25 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/api/users/' + this.id).then(function (response) {
         _this.detailUser = response.data;
       });
+    },
+    handlingDelete: function handlingDelete() {
+      var _this2 = this;
+
+      if (confirm('Apakah anda yakin menghapus data ini?')) {
+        axios["delete"]('/api/users/' + this.id).then(function (response) {
+          if (response.data.status) {
+            _this2.$noty.success(response.data.message);
+
+            _this2.$router.push({
+              name: 'User'
+            });
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      } else {
+        return false;
+      }
     }
   }
 });
@@ -21029,6 +21049,20 @@ var render = function () {
         _c("router-link", { attrs: { to: { name: "User" } } }, [
           _vm._v("Kembali"),
         ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            attrs: { href: "" },
+            on: {
+              click: function ($event) {
+                $event.preventDefault()
+                return _vm.handlingDelete()
+              },
+            },
+          },
+          [_vm._v(" Delete")]
+        ),
       ],
       1
     ),
@@ -21113,7 +21147,6 @@ var render = function () {
     _c(
       "form",
       {
-        attrs: { action: "/users", method: "POST" },
         on: {
           submit: function ($event) {
             $event.preventDefault()
